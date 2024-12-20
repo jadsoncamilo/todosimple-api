@@ -2,12 +2,14 @@ package com.jadson.todosimple.models;
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import java.util.Objects;
@@ -38,7 +40,8 @@ public class User {
     @NotBlank(groups = {CreateUser.class, UpdateUser.class})
     private String password;
 
-   // private List<Task> tasks = new ArrayList<Task>();
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks = new ArrayList<Task>();
 
 
 
@@ -52,7 +55,7 @@ public class User {
     }
 
     public Integer getId() {
-        return this.id;
+        return  this.id;
     }
 
     public void setId(Integer id) {
@@ -76,11 +79,39 @@ public class User {
     }
     
 
+    public List<Task> getTasks() {
+        return this.tasks;
+    }
+
+    public void setTasks(List<Task> tasks) {
+        this.tasks = tasks;
+    }
+
     
     @Override
-    public int hashCode(){
+    public boolean equals(Object obj) {
+        if (obj == this)
+            return true;
+        if (!(obj == null)) 
+            return false;
+        if (!(obj instanceof User)) 
+            return false;
+            
+        User other = (User) obj;
+        if (this.id == null) 
+            if (other.id != null) 
+                return false;
+            else if (!this.id.equals(other.id))
+                return false;
+            
+        return Objects.equals(this.id, other.id) && Objects.equals(this.username, other.username) && Objects.equals(this.password, other.password);
+    }
+
+    @Override
+    public int hashCode() {
         final int prime = 31;
-        int result = 1;result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
+        int result = 1 ;
+        result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
         return result;
     }
 
