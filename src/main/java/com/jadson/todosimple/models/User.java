@@ -16,6 +16,7 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table (name = User.TABLE_NAME)
