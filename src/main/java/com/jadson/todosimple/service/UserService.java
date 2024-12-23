@@ -16,9 +16,7 @@ public class UserService {
     @Autowired
     private  UserRepository userRepository;
 
-    @Autowired
-    private TaskRepository taskRepository;
-
+   
 
     public User findById(Integer id) {
         //? O "Optional" é usado para que se a requisição não existir, não terá "null" como retorno. mas sim "Vazío"
@@ -31,7 +29,6 @@ public class UserService {
     @Transactional
     public User create (User obj){
         obj = this.userRepository.save(obj);
-        this.taskRepository.saveAll(obj.getTasks());
         return obj;
     }
 

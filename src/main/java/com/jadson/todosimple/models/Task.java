@@ -13,29 +13,24 @@ import jakarta.validation.constraints.NotBlank;
 import java.util.Objects;
 
 @Entity
-@Table ( name = Task.TABLE_NAME)
+@Table(name = Task.TABLE_NAME)
 public class Task {
     public static final String TABLE_NAME = "task";
 
     @Id
-    @GeneratedValue ( strategy = GenerationType.IDENTITY)
-    @Column ( name ="id", unique = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", unique = true)
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-
-    @Column( name = "description", length = 255, nullable = false, updatable = false)
+    @Column(name = "description", length = 255, nullable = false)
     @NotBlank
     private String description;
 
-    
-
-
-    public Task() {
-    }
+    public Task() {}
 
     public Task(Integer id, User user, String description) {
         this.id = id;
@@ -44,7 +39,7 @@ public class Task {
     }
 
     public Integer getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(Integer id) {
@@ -52,7 +47,7 @@ public class Task {
     }
 
     public User getUser() {
-        return this.user;
+        return user;
     }
 
     public void setUser(User user) {
@@ -60,54 +55,26 @@ public class Task {
     }
 
     public String getDescription() {
-        return this.description;
+        return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
     }
 
-    public Task id(Integer id) {
-        setId(id);
-        return this;
-    }
-
-    public Task user(User user) {
-        setUser(user);
-        return this;
-    }
-
-    public Task description(String description) {
-        setDescription(description);
-        return this;
-    }
-
     @Override
     public boolean equals(Object obj) {
-        if (obj == this)
-            return true;
-        if (!(obj == null)) 
-            return false;
-        if (!(obj instanceof Task)) 
-            return false;
-            
+        if (this == obj) return true;
+        if (!(obj instanceof Task)) return false;
         Task other = (Task) obj;
-        if (this.id == null) 
-            if (other.id != null) 
-                return false;
-            else if (!this.id.equals(other.id))
-                return false;
-            
-        return Objects.equals(this.id, other.id) && Objects.equals(this.user, other.user) && Objects.equals(this.description, other.description);
+        return Objects.equals(id, other.id) &&
+               Objects.equals(user, other.user) &&
+               Objects.equals(description, other.description);
     }
 
     @Override
     public int hashCode() {
-        final int prime = 31;
-        int result = 1 ;
-        result = prime * result + ((this.id == null) ? 0 : this.id.hashCode());
-        return result;
+        return Objects.hash(id, user, description);
     }
-
-
 }
+
