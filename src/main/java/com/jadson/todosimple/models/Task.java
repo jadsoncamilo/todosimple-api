@@ -1,6 +1,5 @@
 package com.jadson.todosimple.models;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,7 +29,8 @@ public class Task {
     @NotBlank
     private String description;
 
-    public Task() {}
+    public Task() {
+    }
 
     public Task(Integer id, User user, String description) {
         this.id = id;
@@ -64,12 +64,13 @@ public class Task {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Task)) return false;
+        if (this == obj)
+            return true;
+        if (!(obj instanceof Task))
+            return false;
         Task other = (Task) obj;
-        return Objects.equals(id, other.id) &&
-               Objects.equals(user, other.user) &&
-               Objects.equals(description, other.description);
+        return Objects.equals(id, other.id) && Objects.equals(user, other.user)
+                && Objects.equals(description, other.description);
     }
 
     @Override
@@ -77,4 +78,3 @@ public class Task {
         return Objects.hash(id, user, description);
     }
 }
-
